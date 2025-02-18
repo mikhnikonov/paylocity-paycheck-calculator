@@ -18,7 +18,7 @@ builder.Services.AddScoped<IDependentService, DependentService>();
 // Auto Mapper Configurations
 var mapperConfig = new MapperConfiguration(mc =>
 {
-    mc.AddProfile(new DependentMappingProfile());
+    mc.AddProfile(new AutoMapperProfile());
 });
 
 // adding services to be used via injection
