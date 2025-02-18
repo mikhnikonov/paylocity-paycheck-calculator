@@ -11,9 +11,11 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 // Register repositories
 builder.Services.AddScoped<IDependentRepository, DependentRepository>();
+builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
 
 // Register services
 builder.Services.AddScoped<IDependentService, DependentService>();
+builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 
 // Auto Mapper Configurations
 var mapperConfig = new MapperConfiguration(mc =>
