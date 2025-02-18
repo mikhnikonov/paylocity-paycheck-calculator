@@ -21,6 +21,11 @@ public class EmployeesController : ControllerBase
     public async Task<ActionResult<ApiResponse<GetEmployeeDto>>> Get(int id)
     {
         var employee = await _employeeService.GetEmployeeById(id);
+
+        if (employee == null) {
+            return NotFound();
+        }
+
         var result = new ApiResponse<GetEmployeeDto>
         {
             Data = employee,
