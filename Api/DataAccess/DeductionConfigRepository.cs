@@ -1,5 +1,5 @@
 using Api.DataAccess.Interfaces;
-using Api.Models.DeductionConfigKey;
+using Api.Models;
 
 namespace Api.DataAccess;
 
@@ -17,17 +17,17 @@ namespace Api.DataAccess;
 /// </remarks>
 public class DeductionConfigRepository : IDeductionConfigRepository
 {
-    private readonly Dictionary<DeductionConfigKeys, decimal> _deductionConfig = new()
+    private readonly DeductionConfig _deductionConfig = new()
     {
-        { BaseBenefitsCost, 1000m },
-        { DependentCost, 600m },
-        { HighIncomeSalaryThreshold, 80000m },
-        { HighIncomePercentage, 0.02m },
-        { SeniorDependentCost, 200m },
-        { SeniorAgeThreshold, 50 }
+        BaseBenefitsCost = 1000m,
+        DependentCost = 600m,
+        HighIncomeSalaryThreshold = 80000m,
+        HighIncomePercentage = 0.02m,
+        SeniorDependentCost = 200m,
+        SeniorAgeThreshold = 50m
     };
 
-    public Task<Dictionary<string, decimal>> GetDeductionConfig()
+    public Task<DeductionConfig> GetDeductionConfig()
     {
         return Task.FromResult(_deductionConfig);
     }
