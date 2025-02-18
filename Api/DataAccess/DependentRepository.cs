@@ -1,6 +1,15 @@
 using Api.Models;
 using Api.DataAccess.Interfaces;
 
+/// <summary>
+/// Repository for managing dependent data
+/// Provides access to dependent information from the data store
+/// </summary>
+/// <remarks>
+/// Currently using in-memory data storage
+/// TODO: Consider implementing persistent storage
+/// TODO: Add caching for better performance
+/// </remarks>
 namespace Api.DataAccess
 {
     public class DependentRepository : IDependentRepository

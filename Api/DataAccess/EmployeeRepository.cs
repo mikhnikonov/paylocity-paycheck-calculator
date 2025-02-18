@@ -1,6 +1,16 @@
 using Api.Models;
 using Api.DataAccess.Interfaces;
 
+/// <summary>
+/// Repository for managing employee data
+/// Provides access to employee information and their associated dependents
+/// </summary>
+/// <remarks>
+/// Currently using in-memory data storage
+/// TODO: Consider implementing persistent storage
+/// TODO: Add caching for better performance
+/// TODO: Implement optimized queries for dependent relationships
+/// </remarks>
 namespace Api.DataAccess
 {
     public class EmployeeRepository : IEmployeeRepository

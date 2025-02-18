@@ -6,6 +6,18 @@ using Swashbuckle.AspNetCore.Annotations;
 
 namespace Api.Controllers;
 
+/// <summary>
+/// Controller for managing dependent-related operations
+/// Handles retrieval of dependent information
+/// </summary>
+/// <remarks>
+/// TODO: Add more robust error handling by implementing a common request handler pattern
+/// Consider using a Result pattern or middleware for consistent error responses
+/// TODO: Add detailed error messages and implement logging for better debugging and monitoring
+/// - Log failed requests and error details
+/// - Add correlation IDs for request tracking
+/// - Include more descriptive error messages in responses
+/// </remarks>
 [ApiController]
 [Route("api/v1/[controller]")]
 public class DependentsController : ControllerBase
