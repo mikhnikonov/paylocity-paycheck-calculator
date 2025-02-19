@@ -19,6 +19,7 @@ builder.Services.AddScoped<IDeductionConfigRepository, DeductionConfigRepository
 builder.Services.AddScoped<IDependentService, DependentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IPaycheckCalculationService, PaycheckCalculationService>();
+builder.Services.AddSingleton<IEmployeeValidationService, EmployeeValidationService>();
 
 // Register deduction rules
 builder.Services.AddSingleton<IDeductionRule, BaseBenefitsCostRule>();

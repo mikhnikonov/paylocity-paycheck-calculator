@@ -21,17 +21,30 @@ public class PaycheckCalculationService : IPaycheckCalculationService
 {
     private readonly IEnumerable<IDeductionRule> _deductionRules;
     private readonly IDeductionConfigRepository _configRepository;
+    private readonly IEmployeeRepository _employeeRepository;
+    private readonly IEmployeeValidationService _validationService;
 
     public PaycheckCalculationService(
         IEnumerable<IDeductionRule> deductionRules,
-        IDeductionConfigRepository configRepository)
+        IDeductionConfigRepository configRepository,
+        IEmployeeRepository employeeRepository,
+        IEmployeeValidationService validationService)
     {
         _deductionRules = deductionRules;
         _configRepository = configRepository;
+        _employeeRepository = employeeRepository;
+        _validationService = validationService;
     }
 
-    public async Task<GetPaycheckDto> CalculatePaycheck(Employee employee)
+    public async Task<GetPaycheckDto?> CalculatePaycheck(int employeeId)
     {
+        var employee = await _employeeRepository.GetEmployeeById(employeeId);
+        
+        if (employee == null)
+            return null;
+
+        _validationService.ValidateEmployee(employee);
+
         DeductionConfig config = await _configRepository.GetDeductionConfig();
         decimal annualDeductions = _deductionRules.Sum(rule => rule.GetDeduction(employee, config));
         decimal annualGross = employee.Salary;

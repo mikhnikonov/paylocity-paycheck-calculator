@@ -22,11 +22,13 @@ public class EmployeeService : IEmployeeService
 {
     private readonly IEmployeeRepository _repository;
     private readonly IMapper _mapper;
+    private readonly IEmployeeValidationService _validation;
 
-    public EmployeeService(IEmployeeRepository repository, IMapper mapper)
+    public EmployeeService(IEmployeeRepository repository, IMapper mapper, IEmployeeValidationService validation)
     {
         _repository = repository;
         _mapper = mapper;
+        _validation = validation;
     }
 
     public async Task<List<GetEmployeeDto>> GetAllEmployees()
@@ -38,6 +40,10 @@ public class EmployeeService : IEmployeeService
     public async Task<GetEmployeeDto?> GetEmployeeById(int id)
     {
         var employee = await _repository.GetEmployeeById(id);
+        if (employee != null) {
+            _validation.ValidateEmployee(employee);
+            return _mapper.Map<GetEmployeeDto>(employee);
+        }
         return _mapper.Map<GetEmployeeDto>(employee);
     }
 }

@@ -31,27 +31,20 @@ namespace Api.Controllers;
 public class PaycheckController : ControllerBase
 {
     private readonly IPaycheckCalculationService _calculationService;
-    private readonly IEmployeeRepository _employeeRepository;
 
-    public PaycheckController(
-        IPaycheckCalculationService calculationService,
-        IEmployeeRepository employeeRepository
-    )
+    public PaycheckController(IPaycheckCalculationService calculationService)
     {
         _calculationService = calculationService;
-        _employeeRepository = employeeRepository;
     }
 
     [SwaggerOperation(Summary = "Get employee's single paycheck")]
     [HttpGet("{id}")]
     public async Task<ActionResult<ApiResponse<GetPaycheckDto>>> Get(int id)
     {
-        var employee = await _employeeRepository.GetEmployeeById(id);
+        var paycheck = await _calculationService.CalculatePaycheck(id);
 
-        if (employee == null)
-            return NotFound();
-
-        var paycheck = await _calculationService.CalculatePaycheck(employee);
+        if (paycheck == null)
+            return StatusCode(StatusCodes.Status500InternalServerError);
 
         var result = new ApiResponse<GetPaycheckDto>
         {
