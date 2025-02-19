@@ -4,5 +4,5 @@ namespace Api.DataAccess.Interfaces;
 
 public interface IDeductionConfigRepository
 {
-    Task<Dictionary<DeductionConfigKeys, decimal>> GetDeductionConfig();
+    Task<DeductionConfig> GetDeductionConfig();
 } 

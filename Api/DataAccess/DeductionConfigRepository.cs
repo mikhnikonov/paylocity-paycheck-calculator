@@ -24,7 +24,8 @@ public class DeductionConfigRepository : IDeductionConfigRepository
         HighIncomeSalaryThreshold = 80000m,
         HighIncomePercentage = 0.02m,
         SeniorDependentCost = 200m,
-        SeniorAgeThreshold = 50m
+        SeniorAgeThreshold = 50,
+        PaychecksPerYear = 26
     };
 
     public Task<DeductionConfig> GetDeductionConfig()
