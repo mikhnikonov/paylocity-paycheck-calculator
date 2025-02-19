@@ -17,7 +17,7 @@ namespace Api.Services;
 /// - Retry policies for transient config access failures
 /// - Proper error responses for invalid calculations
 /// </remarks>
-public class PaycheckCalculationService
+public class PaycheckCalculationService : IPaycheckCalculationService
 {
     private readonly IEnumerable<IDeductionRule> _deductionRules;
     private readonly IDeductionConfigRepository _configRepository;
@@ -36,9 +36,16 @@ public class PaycheckCalculationService
         decimal annualDeductions = _deductionRules.Sum(rule => rule.GetDeduction(employee, config));
         decimal annualGross = employee.Salary;
 
+        // Using Math.Floor ensures we never round up and potentially overpay
+        // Example: $1000.456789 per period
+        // Math.Round would give: $1000.46 (rounding up)
+        // Math.Floor gives: $1000.45 (always rounding down)
+        // This is a common practice in financial calculations to avoid overpayment
         decimal baseDeductions = Math.Floor(annualDeductions / config.PaychecksPerYear * 100) / 100;
         decimal baseGross = Math.Floor(annualGross / config.PaychecksPerYear * 100) / 100;
 
+        // Any remaining amount due to rounding down is added to the final paycheck
+        // This ensures the total annual amount is exact
         decimal deductionsRemainder = annualDeductions - (baseDeductions * config.PaychecksPerYear);
         decimal grossRemainder = annualGross - (baseGross * config.PaychecksPerYear);
 

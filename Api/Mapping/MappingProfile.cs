@@ -11,10 +11,8 @@ public class AutoMapperProfile : Profile
     {
         // Dependent mappings
         CreateMap<Dependent, GetDependentDto>();
-        CreateMap<GetDependentDto, Dependent>();
 
         // Employee mappings
         CreateMap<Employee, GetEmployeeDto>();
-        CreateMap<GetEmployeeDto, Employee>();
     }
 }

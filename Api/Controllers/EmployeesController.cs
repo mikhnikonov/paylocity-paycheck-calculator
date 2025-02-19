@@ -9,6 +9,8 @@ namespace Api.Controllers;
 /// <summary>
 /// Controller for managing employee-related operations
 /// Handles retrieval of employee information and their dependents
+/// Note: Currently implements read-only operations. Create, Update, and Delete 
+/// operations should be added for complete employee management
 /// </summary>
 /// <remarks>
 /// TODO: Add more robust error handling by implementing a common request handler pattern
@@ -17,6 +19,10 @@ namespace Api.Controllers;
 /// - Log failed requests and error details
 /// - Add correlation IDs for request tracking
 /// - Include more descriptive error messages in responses
+/// TODO: Implement remaining CRUD operations:
+/// - POST endpoint for creating new employees
+/// - PUT endpoint for updating existing employees
+/// - DELETE endpoint for removing employees
 /// </remarks>
 [ApiController]
 [Route("api/v1/[controller]")]

@@ -3,6 +3,7 @@ using Api.DataAccess;
 using Api.DataAccess.Interfaces;
 using Api.Services;
 using Api.Services.Interfaces;
+using Api.Services.DeductionRules;
 using Api.Mapping;
 using AutoMapper;
 
@@ -12,10 +13,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Register repositories
 builder.Services.AddScoped<IDependentRepository, DependentRepository>();
 builder.Services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+builder.Services.AddScoped<IDeductionConfigRepository, DeductionConfigRepository>();
 
 // Register services
 builder.Services.AddScoped<IDependentService, DependentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IPaycheckCalculationService, PaycheckCalculationService>();
+
+// Register deduction rules
+builder.Services.AddSingleton<IDeductionRule, BaseBenefitsCostRule>();
+builder.Services.AddSingleton<IDeductionRule, DependentCostRule>();
+builder.Services.AddSingleton<IDeductionRule, HighIncomeRule>();
+builder.Services.AddSingleton<IDeductionRule, SeniorDependentRule>();
 
 // Auto Mapper Configurations
 var mapperConfig = new MapperConfiguration(mc =>

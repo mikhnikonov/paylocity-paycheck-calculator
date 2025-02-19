@@ -27,18 +27,25 @@ public class SeniorDependentRule : IDeductionRule
 
         foreach (Dependent dependent in employee.Dependents)
         {
-            // Calculate what date the birthday falls on this year
-            DateTime birthDateThisYear = dependent.DateOfBirth.AddYears(calculationDate.Year - dependent.DateOfBirth.Year);
-            
-            // Check if birthday already happened this year
-            if (birthDateThisYear.Year == calculationDate.Year && 
-                birthDateThisYear.Month <= calculationDate.Month)
+            // Calculate age at the end of this year
+            int ageThisYear = calculationDate.Year - dependent.DateOfBirth.Year;
+
+            // Only proceed if person is or becomes 50 this year
+            if (ageThisYear >= 50)
             {
-                // Calculate months from birthday to end of year (including birthday month)
-                int monthsInYear = calculationDate.Month - birthDateThisYear.Month + 1;
+                DateTime birthDateThisYear = dependent.DateOfBirth.AddYears(calculationDate.Year - dependent.DateOfBirth.Year);
                 
-                // Calculate partial year cost for this dependent
-                annualCost += config.SeniorDependentCost * monthsInYear;
+                // If they turn exactly 50 this year, prorate from their birth month
+                if (ageThisYear == 50)
+                {
+                    int monthsAfterBirthday = 13 - birthDateThisYear.Month; // Months including birth month
+                    annualCost += config.SeniorDependentCost * monthsAfterBirthday;
+                }
+                else
+                {
+                    // Over 50, apply full year cost
+                    annualCost += config.SeniorDependentCost * 12;
+                }
             }
         }
 
